@@ -43,14 +43,22 @@ function replacePrivateKey () {
 	cp docker-compose-template.yaml docker-compose.yaml
 
     CURRENT_DIR=$PWD
-    cd crypto-config/peerOrganizations/org1.example.com/ca/
+    cd crypto-config/peerOrganizations/fis.upc.edu/ca/
     PRIV_KEY=$(ls *_sk)
     cd $CURRENT_DIR
     sed $OPTS "s/CA1_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
-    cd crypto-config/peerOrganizations/org2.example.com/ca/
+    cd crypto-config/peerOrganizations/mat.upc.edu/ca/
     PRIV_KEY=$(ls *_sk)
     cd $CURRENT_DIR
     sed $OPTS "s/CA2_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
+    cd crypto-config/peerOrganizations/mat.upc.edu/ca/
+    PRIV_KEY=$(ls *_sk)
+    cd $CURRENT_DIR
+    sed $OPTS "s/CA3_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
+    cd crypto-config/peerOrganizations/mat.upc.edu/ca/
+    PRIV_KEY=$(ls *_sk)
+    cd $CURRENT_DIR
+    sed $OPTS "s/CA4_PRIVATE_KEY/${PRIV_KEY}/g" docker-compose.yaml
 }
 
 function generateCerts(){
@@ -91,7 +99,7 @@ function generateChannelArtifacts(){
 
     echo
 	echo "#################################################################"
-	echo "#######    Generating anchor peer update for Org1MSP   ##########"
+	echo "#######    Generating anchor peer update for fisMSP   ##########"
 	echo "#################################################################"
     $GOPATH/bin/configtxgen -profile general -outputCreateChannelTx ./channel-artifacts/channelGeneral.tx -channelID "channelgeneral"
 
@@ -138,7 +146,7 @@ function cleanNetwork() {
     docker rmi -f $(docker images -q)
     
     # This removes containers used to support the running chaincode.
-    #docker rm -f $(docker ps --filter "name=dev" --filter "name=peer0.org1.example.com" --filter "name=cli" --filter "name=orderer.example.com" -q)
+    #docker rm -f $(docker ps --filter "name=dev" --filter "name=peer0.fis.upc.edu" --filter "name=cli" --filter "name=orderer.upc.edu" -q)
 
     # This removes only images hosting a running chaincode, and in this
     # particular case has the prefix dev-* 
