@@ -87,13 +87,13 @@ function generateChannelArtifacts(){
 	echo "### Generating channel configuration transaction 'channel.tx' ###"
 	echo "#################################################################"
 
-    $GOPATH/bin/configtxgen -profile TwoOrgsOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
+    $GOPATH/bin/configtxgen -profile UpcOrdererGenesis -outputBlock ./channel-artifacts/genesis.block
 
     echo
 	echo "#################################################################"
 	echo "#######    Generating anchor peer update for Org1MSP   ##########"
 	echo "#################################################################"
-    $GOPATH/bin/configtxgen -profile TwoOrgsChannel -outputCreateChannelTx ./channel-artifacts/channel.tx -channelID "mychannel"
+    $GOPATH/bin/configtxgen -profile general -outputCreateChannelTx ./channel-artifacts/channelGeneral.tx -channelID "channelgeneral"
 
 }
 
@@ -158,10 +158,10 @@ verifyArg
 case $COMMAND in
     "start")
         generateCerts
-        # generateChannelArtifacts
-        # replacePrivateKey
-        # pullDockerImages
-        # startNetwork
+        generateChannelArtifacts
+        replacePrivateKey
+        pullDockerImages
+        startNetwork
         ;;
     "status")
         networkStatus
