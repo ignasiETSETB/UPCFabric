@@ -158,10 +158,10 @@ verifyArg
 case $COMMAND in
     "start")
         generateCerts
-        generateChannelArtifacts
-        replacePrivateKey
-        pullDockerImages
-        startNetwork
+        # generateChannelArtifacts
+        # replacePrivateKey
+        # pullDockerImages
+        # startNetwork
         ;;
     "status")
         networkStatus
